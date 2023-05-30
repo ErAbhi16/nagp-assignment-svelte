@@ -7,7 +7,7 @@
 padding: 8px 1px 8px 1px;
 font-weight: bold;
 text-align: left;
-color: #FF8500;
+color: #3777bc;
 border-radius: 3px;
 -webkit-border-radius: 3px;
 -moz-border-radius: 3px;">{name}</span>

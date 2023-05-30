@@ -28,7 +28,7 @@
             <button
                 style=" border: none;
 				padding: 8px 15px 8px 15px;
-				background: #FF8500;
+				background: #3777bc;;
 				color: #fff;
 				box-shadow: 1px 1px 4px #DADADA;
 				-moz-box-shadow: 1px 1px 4px #DADADA;

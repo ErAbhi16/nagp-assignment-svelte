@@ -102,10 +102,12 @@
 
 </script>
 
+<div class="form-container">
+  <div class="form-section">
 <div class="nagp-folder">
-  <h1>Please enter your details</h1>
+  <label>Please enter your details</label>
   <label for="name"><span>Name</span><input type="text" id="name" bind:value={props.name} class="input-field"/></label>
-  <label for="category"><span>Select Category:</span><select bind:value={props.category} on:change={onCategoryChange} class="select-field">
+  <label for="category"><span>Category</span><select bind:value={props.category} on:change={onCategoryChange} class="select-field">
     <option value="">
       Select Category
     </option>
@@ -133,14 +135,26 @@
   <label><span> </span><button class="nagp-save" on:click={save}>Save</button>
     <button class="nagp-cancel"on:click={reset}>Cancel</button></label>
   </div>
-
+</div>
+  <div class="form-section">
   <div class="nagp-folder">
   <div class="nagp-folder-heading">Folder Heirarchy</div>
     <Folder files={$FolderFilestore}></Folder>
   </div>
+  </div>
+  </div>
 
 
   <style type="text/css">
+    .form-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .form-section {
+    flex-basis: 50%;
+    padding: 10px;
+  }
     .nagp-folder{
       max-width: 500px;
       padding: 20px 12px 10px 20px;
