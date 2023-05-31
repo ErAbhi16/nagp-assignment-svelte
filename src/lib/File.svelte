@@ -9,6 +9,6 @@ border-color: #fff;
 background-color: #fff;
 font-weight: bold;
 text-align: left;
-color: #3777bc;"></i>{name}</span>
+color: #3777bc;">{name}</span>
 
 
