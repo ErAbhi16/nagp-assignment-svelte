@@ -173,7 +173,7 @@
     .nagp-folder{
       max-width: 31.25rem;
       padding: 1.25rem 0.75rem 0.625rem 1.25rem;
-      font: 0.625rem Arial, sans-serif;
+      font: 0.625rem Lato;
       text-align: left;
     }
     .nagp-folder-heading{
@@ -193,6 +193,7 @@
       float: left;
       padding-top: 0.5rem;
       padding-right: 0.313rem;
+      font-size: 0.90rem;
     }
     .nagp-folder input.input-field, .nagp-folder .select-field{
       width: 45%;	
