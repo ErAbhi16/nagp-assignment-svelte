@@ -66,7 +66,7 @@
 
     for(var i=0; i < localData.length; i++){
       if(localData[i].name == newResource.name && localData[i].root == newResource.root) {
-        alert('File/Folder already exists');
+        alert('File/Folder already exists at same level');
         return;
       }
     }
