@@ -6,18 +6,18 @@
 
   const categories = ["Folder","File"];
 
-  export let files = [];
+  export let resources = [];
 
   onMount(() => {
       FolderFilestore.subscribe(items => {
-        files = items.filter(item => item.category === 'Folder' && item.root === true).map(item => item.name);
+        resources = items.filter(item => item.category === 'Folder' && item.root === true).map(item => item.name);
       });
     });
 
   let props = {
     name:'',
     root: false,
-    files:[], 
+    resources:[], 
     category:'', 
     parent: '', 
     expanded:true
@@ -34,53 +34,62 @@
   }
 
   function save() {
-    const newFile = { ...props};
-    let tempStore = $FolderFilestore;
+    const newResource = { ...props};
+    let localData = $FolderFilestore;
+    if(props.name === ""){
+      alert("Please input valid Folder/File name");
+      return;
+    }
     if(props.category === ""){
       alert("Please choose valid category");
+      return;
     }
 
-    if(props.category === "File" && tempStore.length === 0){
+    if(props.category === "File" && localData.length === 0){
       alert("Root Folder doesn't exists !");
       return;
     }
 
-    if(props.category === "Folder" && tempStore.length === 0 && props.root === false){
+    if(props.category === "Folder" && localData.length === 0 && props.root === false){
       alert("No Root Folder exists, Please check root");
       return;
     }
 
-    for(var i=0; i < tempStore.length; i++){
-      if(tempStore[i].name == newFile.name && tempStore[i].root == newFile.root) {
+    if(props.category === "Folder" && props.parent === '' && props.root === false){
+      alert("Please check root or select any folder from dropdown");
+      return;
+    }
+
+    for(var i=0; i < localData.length; i++){
+      if(localData[i].name == newResource.name && localData[i].root == newResource.root) {
         alert('File/Folder already exists');
         return;
       }
     }
   
-    for(var i=0; i < tempStore.length; i++){
-      let filesList = tempStore[i].files;
-      for(var j=0;j<filesList.length;j++) {
-        console.log("filesList"+j)
-         console.log(filesList[j])
-        if(filesList[j].name == newFile.name && filesList[j].root == newFile.root && filesList[j].parent == newFile.parent) {
+    for(var i=0; i < localData.length; i++){
+      let resourcesList = localData[i].resources;
+      for(var j=0;j<resourcesList.length;j++) {
+ 
+        if(resourcesList[j].name == newResource.name && resourcesList[j].root == newResource.root && resourcesList[j].parent == newResource.parent) {
           alert('File/Folder Name already exists');
           return;
         }
       }
     }
   
-    for(var i=0; i < tempStore.length; i++){
-      if(tempStore[i].name==props.parent) {
-        tempStore[i].files = [...tempStore[i].files , newFile];
+    for(var i=0; i < localData.length; i++){
+      if(localData[i].name==props.parent) {
+        localData[i].resources = [...localData[i].resources , newResource];
       }
     }
   
     FolderFilestore.update(data =>{
-      return tempStore;
+      return localData;
     })
   
-    if(newFile.parent == '') {
-      FolderFilestore.update(arr => [...arr, newFile]);
+    if(newResource.parent == '') {
+      FolderFilestore.update(arr => [...arr, newResource]);
     }
     
     props.name = '';
@@ -92,7 +101,6 @@
   }
 
   function reset() {
-		console.log("reset");
     props.name = '';
     props.category = '';
     props.root = false;
@@ -105,7 +113,7 @@
 <div class="form-container">
   <div class="form-section">
 <div class="nagp-folder">
-  <label>Please enter your details</label>
+  <label for="form-section">Please enter your details</label>
   <label for="name"><span>Name</span><input type="text" id="name" bind:value={props.name} class="input-field"/></label>
   <label for="category"><span>Category</span><select bind:value={props.category} on:change={onCategoryChange} class="select-field">
     <option value="">
@@ -121,10 +129,10 @@
     <label for="rootFolder"><span>Root Folder:</span><input type="checkbox" id="rootFolder" bind:checked={props.root} /></label>
   </div>
 
-  {#if !props.root && files.length > 0}
+  {#if !props.root && resources.length > 0}
     
   <label for="parent"><span>Please choose folders:</span><select id="parent" bind:value={props.parent} class="select-field">
-      {#each files as folderName}
+      {#each resources as folderName}
               <option value={folderName}>
                   {folderName}
               </option>
@@ -139,7 +147,7 @@
   <div class="form-section">
   <div class="nagp-folder">
   <div class="nagp-folder-heading">Folder Heirarchy</div>
-    <Folder files={$FolderFilestore}></Folder>
+    <Folder resources={$FolderFilestore}></Folder>
   </div>
   </div>
   </div>
