@@ -1,4 +1,4 @@
-<svelte:options tag="fileview-app" />
+<svelte:options tag="file-app" />
 <script>
 	export let name;
 </script>
