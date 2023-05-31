@@ -171,9 +171,9 @@
     padding: 0.625rem;
   }
     .nagp-folder{
-      max-width: 500px;
-      padding: 1.25rem0.75rem0.625rem 20px;
-      font: 13px Arial, Helvetica, sans-serif;
+      max-width: 31.25rem;
+      padding: 1.25rem 0.75rem 0.625rem 1.25rem;
+      font: 0.625rem Arial, sans-serif;
       text-align: left;
     }
     .nagp-folder-heading{
@@ -185,14 +185,14 @@
     }
     .nagp-folder label{
       display: block;
-      margin: 0px 0px 0.938rem 0px;
+      margin: 0rem 0rem 0.938rem 0rem;
     }
     .nagp-folder label > span{
-      width: 100px;
+      width: 6.25rem;
       font-weight: bold;
       float: left;
       padding-top: 0.5rem;
-      padding-right: 5px;
+      padding-right: 0.313rem;
     }
     .nagp-folder input.input-field, .nagp-folder .select-field{
       width: 45%;	
