@@ -140,7 +140,7 @@
   </select></label>
     
   {/if}
-  <label><span> </span><button class="nagp-save" on:click={save}>Save</button>
+  <label><button class="nagp-save" on:click={save}>Save</button>
     <button class="nagp-cancel"on:click={reset}>Cancel</button></label>
   </div>
 </div>
