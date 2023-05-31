@@ -2,20 +2,13 @@
 <script>
 	export let name;
 </script>
-
-<span style=" border: none;
-padding: 8px 1px 8px 1px;
+<span style="
+padding: 0.5rem 0.063rem 0.5rem 0.063rem;
+color: #3777bc;
+border-color: #fff;
+background-color: #fff;
 font-weight: bold;
 text-align: left;
-color: #3777bc;
-border-radius: 3px;
--webkit-border-radius: 3px;
--moz-border-radius: 3px;">{name}</span>
+color: #3777bc;"></i>{name}</span>
 
-<style>
-	span {
-		padding: 0 0 0 1.5em;
-		background: 0 0.1em no-repeat;
-		background-size: 1em 1em;
-	}
-</style>
+

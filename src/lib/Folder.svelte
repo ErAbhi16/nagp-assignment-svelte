@@ -3,16 +3,6 @@
 	import File from './File.svelte';
 
 	export let resources = [];
-
-	function toggle(resource) {
-		let newItem = {
-            category: "",
-        };
-
-        resources = [...resources, newItem];
-        resource.expanded = !resource.expanded;
-        resources = resources.filter((item) => item.category != "");
-	}
 </script>
 
 {#each resources as resource}
@@ -33,8 +23,7 @@
                 font-weight: 700;
                 box-shadow: 0 0.063rem 0.188rem 0 rgba(0,0,0,.2);
                 width: 4rem;
-                height: 2rem;"
-                on:click={() => toggle(resource)}>
+                height: 2rem;">
                 {resource.name}
                 </button
             >

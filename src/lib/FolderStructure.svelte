@@ -53,23 +53,25 @@
     }
 
     if(props.category === "File" && localData.length === 0){
-      alert("Root Folder doesn't exists . Please create root folder !");
+      alert("Root Level Folder doesn't exists . Please create root level folder !");
       return;
     }
 
     if(props.category === "Folder" && localData.length === 0 && props.root === false){
-      alert("No Root Folder exists, Please check root");
+      alert("No Root Level Folder exists, Please check root");
       return;
     }
 
 
 
-    for(var i=0; i < localData.length; i++){
-      if(localData[i].name == newResource.name && localData[i].root == newResource.root) {
-        alert('File/Folder already exists at same level');
-        return;
-      }
-    }
+  let existsAtSameLevel = localData.some((item) => {
+    return item.name === newResource.name && item.root === newResource.root;
+  });
+
+  if (existsAtSameLevel) {
+    alert('File/Folder already exists at the same level');
+    return;
+  }
   
     for(var i=0; i < localData.length; i++){
       let resourcesList = localData[i].resources;
@@ -82,11 +84,12 @@
       }
     }
   
-    for(var i=0; i < localData.length; i++){
-      if(localData[i].name==props.parent) {
-        localData[i].resources = [...localData[i].resources , newResource];
-      }
+  localData = localData.map((item) => {
+    if (item.name === props.parent) {
+      item.resources = [...item.resources, newResource];
     }
+    return item;
+  });
   
     FolderFilestore.update(data =>{
       return localData;
@@ -130,12 +133,12 @@
     {/each}
   </select></label>
   <div hidden={hideRoot}> 
-    <label for="rootFolder"><span>Root Folder</span><input type="checkbox" id="rootFolder" bind:checked={props.root} /></label>
+    <label for="rootFolder"><span>Root Level</span><input type="checkbox" id="rootFolder" bind:checked={props.root} /></label>
   </div>
 
   {#if !props.root && resources.length > 0}
     
-  <label for="parent"><span>Select folders</span><select id="parent" bind:value={props.parent} class="select-field">
+  <label for="parent"><span>Select folder</span><select id="parent" bind:value={props.parent} class="select-field">
       {#each resources as folderName}
               <option value={folderName}>
                   {folderName}
@@ -214,6 +217,7 @@
     width: 6rem;
     height: 2rem;
     margin-left: 0.5rem;
+    cursor: pointer;
     }
 
     .nagp-cancel:hover {
@@ -232,6 +236,7 @@
     box-shadow: 0 0.063rem 0.188rem 0 rgba(0,0,0,.2);
     width: 6rem;
     height: 2rem;
+    cursor: pointer;
     }
    
     </style>
