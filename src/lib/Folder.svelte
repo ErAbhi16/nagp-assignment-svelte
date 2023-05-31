@@ -8,9 +8,9 @@
 {#each resources as resource}
    <ul
         style=" padding: 0.5rem 0.938rem 0.5rem 0.938rem;
-   margin: 0 0 0 5px;
+   margin: 0 0 0 0.313rem;
    list-style: none;
-   border-left: 0.063rem solid #eee;"
+   border-left: 0.05rem solid #3777BC;"
     >
     
         {#if resource.category == "Folder"}
