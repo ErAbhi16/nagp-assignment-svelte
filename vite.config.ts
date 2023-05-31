@@ -13,11 +13,6 @@ export default defineConfig({
     compilerOptions: {
       customElement: true,
       css: 'injected'
-    } ,preprocess: require('svelte-preprocess')({
-      // Add the necessary SASS options here
-      scss: {
-        prependData: `@import './src/styles/variables.scss';`,
-      },
-    }),
+    }
   })],
 })
