@@ -5,7 +5,7 @@
   import Folder from './Folder.svelte';
 
   const categories = ["Folder","File"];
-
+  let error = '';
   export let resources = [];
 
   onMount(() => {
@@ -34,31 +34,32 @@
   }
 
   function save() {
+    error='';
     const newResource = { ...props};
     let localData = $FolderFilestore;
 
     if(props.category === ""){
-      alert("Please choose valid category");
+      error = "Please choose valid category";
       return;
     }
         
     if(props.name === ""){
-      alert("Please input valid Folder/File name");
+      error = "Please input valid Folder/File name";
       return;
     }
 
     if(props.category === "Folder" && props.parent === '' && props.root === false){
-      alert("Please check root or select any folder from dropdown");
+      error = "Please check root or select any folder from dropdown";
       return;
     }
 
     if(props.category === "File" && localData.length === 0){
-      alert("Root Level Folder doesn't exists . Please create root level folder !");
+      error = "Root Level Folder doesn't exists . Please create root level folder !";
       return;
     }
 
     if(props.category === "Folder" && localData.length === 0 && props.root === false){
-      alert("No Root Level Folder exists, Please check root");
+      error = "No Root Level Folder exists, Please check root";
       return;
     }
 
@@ -69,7 +70,7 @@
   });
 
   if (existsAtSameLevel) {
-    alert('File/Folder already exists at the same level');
+    error = 'File/Folder already exists at the same level';
     return;
   }
   
@@ -78,7 +79,7 @@
       for(var j=0;j<resourcesList.length;j++) {
  
         if(resourcesList[j].name == newResource.name && resourcesList[j].root == newResource.root && resourcesList[j].parent == newResource.parent) {
-          alert('File/Folder Name already exists');
+          error = 'File/Folder Name already exists';
           return;
         }
       }
@@ -108,6 +109,7 @@
   }
 
   function reset() {
+    error='';
     props.name = '';
     props.category = '';
     props.root = false;
@@ -149,7 +151,11 @@
   {/if}
   <label><button class="nagp-save" on:click={save}>Save</button>
     <button class="nagp-cancel"on:click={reset}>Cancel</button></label>
+  {#if error}
+    <p>{error}</p>
+  {/if}
   </div>
+
 </div>
   <div class="form-section">
   <div class="nagp-folder">
@@ -164,6 +170,10 @@
     .form-container {
     display: flex;
     justify-content: space-between;
+  }
+    p {
+    color: red;
+    font-size: 1rem;
   }
 
   .form-section {
