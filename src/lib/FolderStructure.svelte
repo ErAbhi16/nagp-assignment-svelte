@@ -36,17 +36,24 @@
   function save() {
     const newResource = { ...props};
     let localData = $FolderFilestore;
-    if(props.name === ""){
-      alert("Please input valid Folder/File name");
-      return;
-    }
+
     if(props.category === ""){
       alert("Please choose valid category");
       return;
     }
+        
+    if(props.name === ""){
+      alert("Please input valid Folder/File name");
+      return;
+    }
+
+    if(props.category === "Folder" && props.parent === '' && props.root === false){
+      alert("Please check root or select any folder from dropdown");
+      return;
+    }
 
     if(props.category === "File" && localData.length === 0){
-      alert("Root Folder doesn't exists !");
+      alert("Root Folder doesn't exists . Please create root folder !");
       return;
     }
 
@@ -55,10 +62,7 @@
       return;
     }
 
-    if(props.category === "Folder" && props.parent === '' && props.root === false){
-      alert("Please check root or select any folder from dropdown");
-      return;
-    }
+
 
     for(var i=0; i < localData.length; i++){
       if(localData[i].name == newResource.name && localData[i].root == newResource.root) {
@@ -113,11 +117,11 @@
 <div class="form-container">
   <div class="form-section">
 <div class="nagp-folder">
-  <label for="form-section">Please enter your details</label>
+  <label for="form-section" class="nagp-folder-heading">Please enter folder/file details</label>
   <label for="name"><span>Name</span><input type="text" id="name" bind:value={props.name} class="input-field"/></label>
   <label for="category"><span>Category</span><select bind:value={props.category} on:change={onCategoryChange} class="select-field">
     <option value="">
-      Select Category
+      Select
     </option>
     {#each categories as category}
       <option value={category}>
@@ -126,12 +130,12 @@
     {/each}
   </select></label>
   <div hidden={hideRoot}> 
-    <label for="rootFolder"><span>Root Folder:</span><input type="checkbox" id="rootFolder" bind:checked={props.root} /></label>
+    <label for="rootFolder"><span>Root Folder</span><input type="checkbox" id="rootFolder" bind:checked={props.root} /></label>
   </div>
 
   {#if !props.root && resources.length > 0}
     
-  <label for="parent"><span>Please choose folders:</span><select id="parent" bind:value={props.parent} class="select-field">
+  <label for="parent"><span>Select folders</span><select id="parent" bind:value={props.parent} class="select-field">
       {#each resources as folderName}
               <option value={folderName}>
                   {folderName}
@@ -146,7 +150,7 @@
 </div>
   <div class="form-section">
   <div class="nagp-folder">
-  <div class="nagp-folder-heading">Folder Heirarchy</div>
+  <div class="nagp-folder-heading">Folder Structure</div>
     <Folder resources={$FolderFilestore}></Folder>
   </div>
   </div>
@@ -161,54 +165,43 @@
 
   .form-section {
     flex-basis: 50%;
-    padding: 10px;
+    padding: 0.625rem;
   }
     .nagp-folder{
       max-width: 500px;
-      padding: 20px 12px 10px 20px;
+      padding: 1.25rem0.75rem0.625rem 20px;
       font: 13px Arial, Helvetica, sans-serif;
       text-align: left;
     }
     .nagp-folder-heading{
       font-weight: bold;
       font-style: italic;
-      border-bottom: 2px solid #ddd;
-      margin-bottom: 20px;
-      font-size: 15px;
-      padding-bottom: 3px;
+      margin-bottom: 1.25rem;
+      font-size: 0.938rem;
+      padding-bottom:0.188rem;
     }
     .nagp-folder label{
       display: block;
-      margin: 0px 0px 15px 0px;
+      margin: 0px 0px 0.938rem 0px;
     }
     .nagp-folder label > span{
       width: 100px;
       font-weight: bold;
       float: left;
-      padding-top: 8px;
+      padding-top: 0.5rem;
       padding-right: 5px;
     }
     .nagp-folder input.input-field, .nagp-folder .select-field{
-      width: 48%;	
+      width: 45%;	
     }
     .nagp-folder input.input-field, 
      .nagp-folder .select-field{
       box-sizing: border-box;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
-      border: 1px solid #C2C2C2;
-      box-shadow: 1px 1px 4px #EBEBEB;
-      -moz-box-shadow: 1px 1px 4px #EBEBEB;
-      -webkit-box-shadow: 1px 1px 4px #EBEBEB;
-      border-radius: 3px;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      padding: 8px 15px 8px 15px;
+      border: 0.063rem solid #C2C2C2;
+      padding: 0.5rem 0.938rem 0.5rem 0.938rem;
       outline: none;
-    }
-    .nagp-folder .input-field:focus, 
-    .nagp-folder .select-field:focus{
-      border: 1px solid #0C0;
     }
 
     .nagp-cancel{
@@ -216,8 +209,11 @@
     border-color: #fff;
     background-color: #fff;
     font-weight: 700;
-    -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 0.063rem 0.188rem 0 rgba(0,0,0,.2);
+    box-shadow: 0 0.063rem 0.188rem 0 rgba(0,0,0,.2);
+    width: 6rem;
+    height: 2rem;
+    margin-left: 0.5rem;
     }
 
     .nagp-cancel:hover {
@@ -233,7 +229,9 @@
     border-color: #3777bc;
     background-color: #3777bc;
     font-weight: 700;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
+    box-shadow: 0 0.063rem 0.188rem 0 rgba(0,0,0,.2);
+    width: 6rem;
+    height: 2rem;
     }
    
     </style>

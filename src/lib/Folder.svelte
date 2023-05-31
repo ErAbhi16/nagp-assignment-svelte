@@ -17,25 +17,23 @@
 
 {#each resources as resource}
    <ul
-        style=" padding: 8px 15px 8px 15px;
+        style=" padding: 0.5rem 0.938rem 0.5rem 0.938rem;
    margin: 0 0 0 5px;
    list-style: none;
-   border-left: 1px solid #eee;"
+   border-left: 0.063rem solid #eee;"
     >
     
         {#if resource.category == "Folder"}
         
             <button
                 style=" border: none;
-				padding: 8px 15px 8px 15px;
-				background: #3777bc;;
 				color: #fff;
-				box-shadow: 1px 1px 4px #DADADA;
-				-moz-box-shadow: 1px 1px 4px #DADADA;
-				-webkit-box-shadow: 1px 1px 4px #DADADA;
-				border-radius: 3px;
-				-webkit-border-radius: 3px;
-				-moz-border-radius: 3px;"
+                border-color: #3777bc;
+                background-color: #3777bc;
+                font-weight: 700;
+                box-shadow: 0 0.063rem 0.188rem 0 rgba(0,0,0,.2);
+                width: 4rem;
+                height: 2rem;"
                 on:click={() => toggle(resource)}>
                 {resource.name}
                 </button
@@ -45,7 +43,7 @@
         {#if resource.expanded}
         
             {#if resource.resources.length > 0}
-                <li style=" padding: 8px 15px 8px 15px">
+                <li style=" padding: 0.5rem 0.938rem 0.5rem 0.938rem">
                     <svelte:self {...resource} />
                 </li>
             {:else if resource.category == "File"}
