@@ -173,7 +173,7 @@
     .nagp-folder{
       max-width: 31.25rem;
       padding: 1.25rem 0.75rem 0.625rem 1.25rem;
-      font: 0.625rem Lato;
+      font: 0.125rem Lato;
       text-align: left;
     }
     .nagp-folder-heading{
