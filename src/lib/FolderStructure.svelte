@@ -104,15 +104,20 @@
     return false;
   }
   
-  for(var i=0; i < localData.length; i++){
-      let resourcesList = localData[i].resources;
-      for(var j=0;j<resourcesList.length;j++) {
- 
-        if(resourcesList[j].name == newResource.name && resourcesList[j].root == newResource.root && resourcesList[j].parent == newResource.parent) {
-          error = 'File/Folder Name already exists';
-          return false;
-        }
-      }
+  // Check if the file/folder name already exists
+  let resourceExists = localData.some((item) => {
+    return item.resources.some((resource) => {
+      return (
+        resource.name === newResource.name &&
+        resource.root === newResource.root &&
+        resource.parent === newResource.parent
+      );
+    });
+  });
+
+  if (resourceExists) {
+    error = 'File/Folder Name already exists';
+    return false;
   }
     return true;
   }
