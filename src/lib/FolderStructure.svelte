@@ -34,57 +34,10 @@
   }
 
   function save() {
-    error='';
-    const newResource = { ...props};
-    let localData = $FolderFilestore;
-
-    if(props.category === ""){
-      error = "Please choose valid category";
-      return;
-    }
-        
-    if(props.name === ""){
-      error = "Please input valid Folder/File name";
-      return;
-    }
-
-    if(props.category === "Folder" && props.parent === '' && props.root === false){
-      error = "Please check root or select any folder from dropdown";
-      return;
-    }
-
-    if(props.category === "File" && localData.length === 0){
-      error = "Root Level Folder doesn't exists . Please create root level folder !";
-      return;
-    }
-
-    if(props.category === "Folder" && localData.length === 0 && props.root === false){
-      error = "No Root Level Folder exists, Please check root";
-      return;
-    }
-
-
-
-  let existsAtSameLevel = localData.some((item) => {
-    return item.name === newResource.name && item.root === newResource.root;
-  });
-
-  if (existsAtSameLevel) {
-    error = 'File/Folder already exists at the same level';
-    return;
-  }
-  
-    for(var i=0; i < localData.length; i++){
-      let resourcesList = localData[i].resources;
-      for(var j=0;j<resourcesList.length;j++) {
- 
-        if(resourcesList[j].name == newResource.name && resourcesList[j].root == newResource.root && resourcesList[j].parent == newResource.parent) {
-          error = 'File/Folder Name already exists';
-          return;
-        }
-      }
-    }
-  
+  if(isValid())
+  {
+  const newResource = { ...props};
+  let localData = $FolderFilestore;
   localData = localData.map((item) => {
     if (item.name === props.parent) {
       item.resources = [...item.resources, newResource];
@@ -106,6 +59,62 @@
     props.parent = '';
     props.expanded = true;
     hideRoot = true;
+  }
+  }
+
+  function isValid()
+  {
+    error='';
+    const newResource = { ...props};
+    let localData = $FolderFilestore;
+
+    if(props.name === ""){
+      error = "Please input valid Folder/File name";
+      return false;
+    }
+
+    if(props.category === ""){
+      error = "Please choose valid category";
+      return false;
+    }     
+
+    if(props.category === "Folder" && props.parent === '' && props.root === false){
+      error = "Please check root or select any folder from dropdown";
+      return false;
+    }
+
+    if(props.category === "File" && localData.length === 0){
+      error = "Root Level Folder doesn't exists . Please create root level folder !";
+      return false;
+    }
+
+    if(props.category === "Folder" && localData.length === 0 && props.root === false){
+      error = "No Root Level Folder exists, Please check root";
+      return false;
+    }
+
+
+
+  let existsAtSameLevel = localData.some((item) => {
+    return item.name === newResource.name && item.root === newResource.root;
+  });
+
+  if (existsAtSameLevel) {
+    error = 'File/Folder already exists at the same level';
+    return false;
+  }
+  
+  for(var i=0; i < localData.length; i++){
+      let resourcesList = localData[i].resources;
+      for(var j=0;j<resourcesList.length;j++) {
+ 
+        if(resourcesList[j].name == newResource.name && resourcesList[j].root == newResource.root && resourcesList[j].parent == newResource.parent) {
+          error = 'File/Folder Name already exists';
+          return false;
+        }
+      }
+  }
+    return true;
   }
 
   function reset() {
@@ -159,7 +168,7 @@
 </div>
   <div class="form-section">
   <div class="nagp-folder">
-  <div class="nagp-folder-heading">Folder Structure</div>
+  <div class="nagp-folder-heading">Folder/File Hierarchy</div>
     <Folder resources={$FolderFilestore}></Folder>
   </div>
   </div>
