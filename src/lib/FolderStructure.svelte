@@ -82,10 +82,6 @@
       return false;
     }
 
-    if(props.category === "File" && localData.length === 0){
-      error = "Root Level Folder doesn't exists . Please create root level folder !";
-      return false;
-    }
 
     if(props.category === "Folder" && localData.length === 0 && props.root === false){
       error = "No Root Level Folder exists, Please check root";
