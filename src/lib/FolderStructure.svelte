@@ -130,6 +130,14 @@
     props.parent = '';
     props.expanded = true;
   }
+  
+  function handleCheckboxClick() {
+    props.root = !props.root;
+    if(props.root === true)
+    {
+    props.parent = '';
+    }
+  }
 
 </script>
 
@@ -149,7 +157,7 @@
     {/each}
   </select></label>
   <div hidden={hideRoot}> 
-    <label for="rootFolder"><span>Root Level</span><input type="checkbox" id="rootFolder" bind:checked={props.root} /></label>
+    <label for="rootFolder"><span>Root Level</span><input type="checkbox" on:click={handleCheckboxClick} id="rootFolder" bind:checked={props.root} /></label>
   </div>
 
   {#if !props.root && resources.length > 0}
