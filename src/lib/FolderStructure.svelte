@@ -6,6 +6,7 @@
 
   const categories = ["Folder","File"];
   let error = '';
+  let hideCheckbox = true;
   export let resources = [];
 
   onMount(() => {
@@ -21,15 +22,13 @@
     category:'', 
     parent: '', 
     expanded:true
-  }
-
-  let hideRoot = true;
+  } 
 
   function onCategoryChange(){
     if(props.category === 'Folder'){
-      hideRoot = false;
+      hideCheckbox = false;
     }else{
-      hideRoot = true;
+      hideCheckbox = true;
     }
   }
 
@@ -58,7 +57,7 @@
     props.root = false;
     props.parent = '';
     props.expanded = true;
-    hideRoot = true;
+    hideCheckbox = true;
   }
   }
 
@@ -141,45 +140,55 @@
 
 </script>
 
-<div class="form-container">
-  <div class="form-section">
+<div class="nagp-form-container">
+  <div class="nagp-form-section">
 <div class="nagp-folder">
-  <label for="form-section" class="nagp-folder-heading">Please enter folder/file details</label>
-  <label for="name"><span>Name</span><input type="text" id="name" bind:value={props.name} class="input-field"/></label>
-  <label for="category"><span>Category</span><select bind:value={props.category} on:change={onCategoryChange} class="select-field">
-    <option value="">
-      Select
-    </option>
+  <label for="nagp-form-section" class="nagp-folder-heading">Please enter folder/file details</label>
+  <label for="resourceName">
+  <span>Name</span>
+  <input type="text" id="resourceName" bind:value={props.name} class="nagp-input"/>
+  </label>
+  <label for="category">
+  <span>Category</span>
+  <select bind:value={props.category} on:change={onCategoryChange} class="nagp-select">
+    <option value="">Select</option>
     {#each categories as category}
-      <option value={category}>
-        {category}
-      </option>
+      <option value={category}>{category}</option>
     {/each}
-  </select></label>
-  <div hidden={hideRoot}> 
-    <label for="rootFolder"><span>Root Level</span><input type="checkbox" on:click={handleCheckboxClick} id="rootFolder" bind:checked={props.root} /></label>
+  </select>
+  </label>
+  <div hidden={hideCheckbox}> 
+    <label for="rootLevel">
+    <span>Root Level</span>
+    <input type="checkbox" on:click={handleCheckboxClick} id="rootLevel" bind:checked={props.root} />
+    </label>
   </div>
 
-  {#if !props.root && resources.length > 0}
+  {#if resources.length > 0 && !props.root}
     
-  <label for="parent"><span>Select folder</span><select id="parent" bind:value={props.parent} class="select-field">
+  <label for="parent">
+  <span>Select folder</span>
+  <select id="parent" bind:value={props.parent} class="nagp-select">
       {#each resources as folderName}
               <option value={folderName}>
                   {folderName}
               </option>
       {/each}
-  </select></label>
+  </select>
+  </label>
     
   {/if}
-  <label><button class="nagp-save" on:click={save}>Save</button>
-    <button class="nagp-cancel"on:click={reset}>Cancel</button></label>
+  <label>
+  <button class="nagp-save" on:click={save}>Save</button>
+  <button class="nagp-cancel"on:click={reset}>Cancel</button>
+  </label>
   {#if error}
     <p>{error}</p>
   {/if}
   </div>
 
 </div>
-  <div class="form-section">
+  <div class="nagp-form-section">
   <div class="nagp-folder">
   <div class="nagp-folder-heading">Folder/File Hierarchy</div>
     <Folder resources={$FolderFilestore}></Folder>
@@ -189,7 +198,7 @@
 
 
   <style type="text/css">
-    .form-container {
+    .nagp-form-container {
     display: flex;
     justify-content: space-between;
   }
@@ -198,7 +207,7 @@
     font-size: 1rem;
   }
 
-  .form-section {
+  .nagp-form-section {
     flex-basis: 50%;
     padding: 0.625rem;
   }
@@ -227,11 +236,11 @@
       padding-right: 0.313rem;
       font-size: 0.90rem;
     }
-    .nagp-folder input.input-field, .nagp-folder .select-field{
+    .nagp-folder input.nagp-input, .nagp-folder .nagp-select{
       width: 45%;	
     }
-    .nagp-folder input.input-field, 
-     .nagp-folder .select-field{
+    .nagp-folder input.nagp-input, 
+     .nagp-folder .nagp-select{
       box-sizing: border-box;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
